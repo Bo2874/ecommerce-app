@@ -99,4 +99,30 @@ const adminLogin = async (req,res) => {
     }
 }
 
-export { loginUser, registerUser, adminLogin}
+// Route for user list
+const listUsers = async (req,res) => {
+    try {
+
+        const users = await userModel.find({});
+        res.json({success: true, users})
+        
+    } catch (error) {
+        console.log(error);
+        res.json({success:false, message:error.message})
+    }
+}
+
+// Route for remove user
+const removeUser = async (req, res) => {
+    try {
+
+      await userModel.findByIdAndDelete(req.body.id); 
+      res.json({ success: true, message: "User Removed" });
+      
+    } catch (error) {
+      console.log(error);
+      res.json({ success: false, message: error.message });
+    }
+  };
+
+export { loginUser, registerUser, adminLogin, listUsers, removeUser}
